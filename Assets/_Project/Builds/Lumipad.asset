@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ed248778a24469bd73306d80113f4f, type: 3}
+  m_Name: Lumipad
+  m_EditorClassIdentifier: 
+  binaryName: LeiaTemplateProject.{build}.apk
+  destinationPath: C:/Users/yolan/Dropbox/Apps/3D Starfighter
+  buildPath: C:/Users/yolan/Dropbox/Apps/3D Starfighter
+  buildTarget: 13
+  scenes:
+  - {fileID: 102900000, guid: d37801bba83b59a41be603cd68a64aca, type: 3}
+  - {fileID: 102900000, guid: 614a90b56ce3a0643a70f7998b66909f, type: 3}
+  - {fileID: 102900000, guid: 882ba0116a634fc42bc84ca7832dca16, type: 3}
+  majorVersion: 0
+  minorVersion: 0
+  buildNumber: 4
+  lastBuild: C:/Users/yolan/Dropbox/Apps/3D Starfighter\LeiaTemplateProject.apk

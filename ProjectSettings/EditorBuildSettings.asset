@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Project/Scenes/Main.unity
+    guid: d37801bba83b59a41be603cd68a64aca
+  - enabled: 1
+    path: Assets/_Project/Scenes/TopdownHexGrid.unity
+    guid: 614a90b56ce3a0643a70f7998b66909f
+  - enabled: 1
+    path: Assets/_Project/Scenes/Cockpit.unity
+    guid: 882ba0116a634fc42bc84ca7832dca16
   m_configObjects: {}
