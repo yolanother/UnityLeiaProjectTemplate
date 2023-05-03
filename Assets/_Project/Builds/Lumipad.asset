@@ -20,7 +20,10 @@ MonoBehaviour:
   - {fileID: 102900000, guid: d37801bba83b59a41be603cd68a64aca, type: 3}
   - {fileID: 102900000, guid: 614a90b56ce3a0643a70f7998b66909f, type: 3}
   - {fileID: 102900000, guid: 882ba0116a634fc42bc84ca7832dca16, type: 3}
+  - {fileID: 102900000, guid: 13afaa842668aa0468fbbfc2386d2c20, type: 3}
+  - {fileID: 102900000, guid: 34a8ade0c5c9afa4297f8fbcf8b4b213, type: 3}
+  - {fileID: 102900000, guid: 1f4d2a126e19c6b44a0e76178321cee6, type: 3}
   majorVersion: 0
   minorVersion: 0
-  buildNumber: 4
-  lastBuild: C:/Users/yolan/Dropbox/Apps/3D Starfighter\LeiaTemplateProject.apk
+  buildNumber: 5
+  lastBuild: C:/Users/yolan/Dropbox/Apps/3D Starfighter\LeiaTemplateProject.4.apk

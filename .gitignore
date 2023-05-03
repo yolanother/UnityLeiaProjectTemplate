@@ -71,3 +71,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 AssetManager
+UnityBuildTools
+Assets/Fullscreen
+Assets/Fullscreen.meta
+Assets/Plugins
+Packages/UnityBuildUtils
+Assets/Plugins.meta

@@ -1,17 +1,40 @@
 {
   "dependencies": {
-    "com.doubtech.unitybuilds": {
-      "version": "https://github.com/yolanother/UnityBuildUtils.git",
+    "com.doubtech.assetmanager": {
+      "version": "file:AssetManager",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "b0d807b06c079a78e114333a62a541ffc9e47daf"
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.doubtech.unitybuilds": {
+      "version": "file:UnityBuildUtils",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {}
+    },
+    "com.unity.burst": {
+      "version": "1.8.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.cinemachine": {
+      "version": "2.9.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.31"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
       "version": "2.0.3",
@@ -73,6 +96,22 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.inputsystem": {
+      "version": "1.5.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mathematics": {
+      "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.performance.profile-analyzer": {
       "version": "1.2.2",
       "depth": 1,
@@ -106,6 +145,17 @@
         "com.unity.ugui": "1.0.0",
         "com.unity.modules.physics": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
+      }
+    },
+    "com.unity.render-pipelines.universal": {
+      "version": "12.1.11",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.burst": "1.8.4",
+        "com.unity.render-pipelines.core": "12.1.11",
+        "com.unity.shadergraph": "12.1.11"
       }
     },
     "com.unity.searcher": {

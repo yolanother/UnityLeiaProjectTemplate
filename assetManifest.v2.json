@@ -1,0 +1,47 @@
+{
+    "manifestVersion": 2,
+    "installedAssets": [
+        {
+            "name": "Odin Inspector and Serializer",
+            "id": "89041",
+            "versionId": "3.1.12.2",
+            "versionNumber": 801811,
+            "url": "https://assetstore.unity.com/packages/slug/89041"
+        },
+        {
+            "name": "Fullscreen Editor",
+            "id": "69534",
+            "versionId": "2.2.7",
+            "versionNumber": 741039,
+            "url": "https://assetstore.unity.com/packages/slug/69534"
+        },
+        {
+            "name": "Corridor Lighting Example",
+            "id": "33630",
+            "versionId": "3.1.0",
+            "versionNumber": 703249,
+            "url": "https://assetstore.unity.com/packages/slug/33630"
+        },
+        {
+            "name": "Starter Assets - First Person Character Controller | URP",
+            "id": "196525",
+            "versionId": "1.2",
+            "versionNumber": 783260,
+            "url": "https://assetstore.unity.com/packages/slug/196525"
+        },
+        {
+            "name": "Starter Assets - Third Person Character Controller",
+            "id": "196526",
+            "versionId": "1.1.1",
+            "versionNumber": 702603,
+            "url": "https://assetstore.unity.com/packages/slug/196526"
+        },
+        {
+            "name": "Sci-Fi Character 08 (Renegade)",
+            "id": "208640",
+            "versionId": "1.0",
+            "versionNumber": 660221,
+            "url": "https://assetstore.unity.com/packages/slug/208640"
+        }
+    ]
+}
