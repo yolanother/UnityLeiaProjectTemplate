@@ -1,0 +1,94 @@
+{
+    "stringParams": [
+    ],
+    "intParams": [
+        {
+            "Name": "PanelResolution",
+            "Collection": [
+                2560,
+                1600
+            ]
+        },
+        {
+            "Name": "NumViews",
+            "Collection": [
+                8,
+                1
+            ]
+        },
+        {
+            "Name": "DisplaySizeInMm",
+            "Collection": [
+                265.9584,
+                166.224
+            ]
+        },
+        {
+            "Name": "ViewResolution",
+            "Collection": [
+                1280,
+                800
+            ]
+        }
+    ],
+    "floatParams": [
+        {
+            "Name": "ResolutionScale",
+            "Collection": [
+                1.0
+            ]
+        },
+        {
+            "Name": "Gamma",
+            "Collection": [
+                1.99
+            ]
+        },
+        {
+            "Name": "Beta",
+            "Collection": [
+                2.0
+            ]
+        },
+        {
+            "Name": "PixelPitchInMM",
+            "Collection": [
+                0.10389,
+                0.10389
+            ]
+        },
+        {
+            "Name": "AlignmentOffset",
+            "Collection": [
+                0.0,
+                0.0
+            ]
+        },
+        {
+            "Name": "ActCoefficientsY",
+            "Collection": [
+                0.02,
+                0.01
+            ]
+        },
+        {
+            "Name": "ActCoefficientsX",
+            "Collection": [
+                0.05,
+                0.01
+            ]
+        },
+        {
+            "Name": "SystemDisparityPercent",
+            "Collection": [
+                0.012500000186264515
+            ]
+        },
+        {
+            "Name": "SystemDisparityPixels",
+            "Collection": [
+                8.0
+            ]
+        }
+    ]
+}
