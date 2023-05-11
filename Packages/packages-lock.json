@@ -1,16 +1,11 @@
 {
   "dependencies": {
-    "com.doubtech.assetmanager": {
-      "version": "file:AssetManager",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.doubtech.unitybuilds": {
-      "version": "file:UnityBuildUtils",
+      "version": "https://github.com/yolanother/UnityBuildUtils.git",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "b0d807b06c079a78e114333a62a541ffc9e47daf"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -28,7 +23,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "2.0.3",
+      "version": "2.0.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -63,7 +58,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.20",
+      "version": "3.0.21",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -155,7 +150,7 @@
       }
     },
     "com.unity.test-framework": {
-      "version": "1.1.31",
+      "version": "1.1.33",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -185,7 +180,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.6.4",
+      "version": "1.6.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
