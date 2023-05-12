@@ -4866,6 +4866,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 1st Person Character
       objectReference: {fileID: 0}
+    - target: {fileID: 3532264183315504959, guid: 37fceac935601c94186b04a43c4d2bfe,
+        type: 3}
+      propertyPath: _cameraShiftScaling
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4442495942014124993, guid: 37fceac935601c94186b04a43c4d2bfe,
         type: 3}
       propertyPath: m_RootOrder
@@ -17639,72 +17644,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 643878323}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2026103528 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5559048617674405367, guid: 37fceac935601c94186b04a43c4d2bfe,
-    type: 3}
-  m_PrefabInstance: {fileID: 643878323}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2026103529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026103527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 2026103528}
-  volumeLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  stopNaNPropagation: 1
-  finalBlitToCameraTarget: 0
-  antialiasingMode: 3
-  temporalAntialiasing:
-    jitterSpread: 0.75
-    sharpness: 0.25
-    stationaryBlending: 0.95
-    motionBlending: 0.85
-  subpixelMorphologicalAntialiasing:
-    quality: 2
-  fastApproximateAntialiasing:
-    fastMode: 0
-    keepAlpha: 0
-  fog:
-    enabled: 1
-    excludeSkybox: 1
-  debugLayer:
-    lightMeter:
-      width: 512
-      height: 256
-      showCurves: 1
-    histogram:
-      width: 512
-      height: 256
-      channel: 3
-    waveform:
-      exposure: 0.12
-      height: 256
-    vectorscope:
-      size: 256
-      exposure: 0.12
-    overlaySettings:
-      linearDepth: 0
-      motionColorIntensity: 4
-      motionGridSize: 64
-      colorBlindnessType: 0
-      colorBlindnessStrength: 1
-  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
-  breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
 --- !u!124 &2026103530
 Behaviour:
   m_ObjectHideFlags: 0
@@ -17713,6 +17652,44 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2026103527}
   m_Enabled: 1
+--- !u!114 &2026103536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026103527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963d7f86fc35e144ea8d584dbc22c4db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baselineRange:
+    _min: 0
+    _lifetimeMin: 0
+    _minLabel: MinBaseline
+    _max: 10
+    _lifetimeMax: 100
+    _maxLabel: MaxBaseline
+  _convergenceRange:
+    _min: 0.00001
+    _lifetimeMin: 0.00001
+    _minLabel: MinConvergence
+    _max: 1000
+    _lifetimeMax: 10000000
+    _maxLabel: MaxConvergence
+  _depthScale: 0.075
+  convergenceChangeThreshold: 0.01
+  baselineChangeThreshold: 0.05
+  _convergenceFocusSpeed: 0.5
+  _baselineFocusSpeed: 0.1
+  _focusOffset: 0
+  _layers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _maxRaycastDistance: 1000
+  samples: 500
+  showDebugRaycasts: 1
 --- !u!1001 &2038989406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19425,6 +19402,11 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+  m_PreviousLayer: 10
+  m_PreviousPriority: 0
+  m_TempColliders:
+  - {fileID: 2120429406}
+  m_InternalProfile: {fileID: 0}
 --- !u!65 &2120429406
 BoxCollider:
   m_ObjectHideFlags: 0
