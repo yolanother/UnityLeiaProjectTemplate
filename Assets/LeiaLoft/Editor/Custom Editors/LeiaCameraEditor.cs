@@ -89,6 +89,7 @@ namespace LeiaLoft
                     Matrix4x4 tm = tr.localToWorldMatrix;
                     tm.SetColumn(2, viewAxis);
                     Handles.matrix = tm;
+
                     Handles.DrawLine(p0, p1);
                     Handles.DrawLine(p1, p2);
                     Handles.DrawLine(p2, p3);
@@ -101,31 +102,51 @@ namespace LeiaLoft
                     Handles.DrawLine(p1, p5);
                     Handles.DrawLine(p2, p6);
                     Handles.DrawLine(p3, p7);
+
                 }
             }
             ConvergencePlaneHandlesDraw(t);
         }
-        private static void ConvergencePlaneHandlesDraw(LeiaCamera t)
+        private static void ConvergencePlaneHandlesDraw(LeiaCamera leiaCamera)
         {
-            Undo.RecordObject(t, "Set Convergence Distance");
+            Undo.RecordObject(leiaCamera, "Set Convergence Distance");
 
-            Vector3 ConvergencePlane = t.transform.position + t.transform.forward * t.ConvergenceDistance;
-            ConvergencePlane = Handles.Slider(
-                ConvergencePlane, 
-                t.transform.forward
+            Vector3 ConvergencePlane = leiaCamera.transform.position + leiaCamera.transform.forward * leiaCamera.ConvergenceDistance;
+            ConvergencePlane = Handles.Slider(ConvergencePlane, leiaCamera.transform.forward);
+
+            leiaCamera.ConvergenceDistance = Vector3.Distance(
+                ConvergencePlane - new Vector3(leiaCamera.CameraShift.x, leiaCamera.CameraShift.y, 0),
+                leiaCamera.transform.position
             );
-            t.ConvergenceDistance = Vector3.Distance(
-                ConvergencePlane - new Vector3(t.CameraShift.x, t.CameraShift.y, 0), 
-                t.transform.position
-            );
+
+            leiaCamera.virtualDisplay.UpdateDisplayGizmos();
+
+            Handles.color = Color.magenta;
+
+            // Get the current scale of the object
+            float heightPrev = leiaCamera.virtualDisplay.Height;
+            leiaCamera.virtualDisplay.Height = Handles.ScaleSlider(leiaCamera.virtualDisplay.Height, ConvergencePlane, leiaCamera.transform.up, Quaternion.identity, HandleUtility.GetHandleSize(ConvergencePlane), 0);
+
+            if (!Application.isPlaying)
+            {
+                if (heightPrev != leiaCamera.virtualDisplay.Height)
+                {
+                    if (!leiaCamera.virtualDisplay.IsPartOfPrefab)
+                    {
+                        leiaCamera.virtualDisplay.SetVirtualDisplayAsParent();
+                        leiaCamera.virtualDisplay.UpdateCameraFromVirtualDisplay();
+                        leiaCamera.virtualDisplay.SetLeiaCameraAsParent();
+                        leiaCamera.virtualDisplay.UpdateDisplayGizmos();
+                    }
+                }
+            }
         }
 
         float previousFOV;
-        Vector3 previosCameraPosition;
+        Vector3 previousCameraPosition;
         float previousConvergence;
 
         bool SetCameraFOVButtonPressed;
-
 
         public override void OnInspectorGUI()
         {
@@ -203,14 +224,14 @@ namespace LeiaLoft
                 GUILayout.Label("Recommended for best 3d effect:");
                 if (GUILayout.Button("Set Natural Camera FOV"))
                 {
-                    previosCameraPosition = _controller.transform.position;
+                    previousCameraPosition = _controller.transform.position;
                     previousConvergence = _controller.ConvergenceDistance;
                     previousFOV = _controller.Camera.fieldOfView;
 
                     //calculate display with with old fov
                     float displayHalfHeight = Mathf.Tan((_controller.Camera.fieldOfView / 2f) * Mathf.Deg2Rad) * _controller.ConvergenceDistance;
                     Vector3 displayPosition = _controller.transform.position + _controller.transform.forward * _controller.ConvergenceDistance;
-                    
+
                     Undo.RecordObject(_controller.transform, "Set Natural FOV");
                     Undo.RecordObject(_controller.Camera, "Set Natural FOV");
 
@@ -237,7 +258,7 @@ namespace LeiaLoft
                     if (GUILayout.Button("Undo set camera FOV"))
                     {
                         _controller.Camera.fieldOfView = previousFOV;
-                        _controller.Camera.transform.position = previosCameraPosition;
+                        _controller.Camera.transform.position = previousCameraPosition;
                         _controller.ConvergenceDistance = previousConvergence;
                     }
                     if (GUILayout.Button("Save new FOV"))
@@ -246,7 +267,7 @@ namespace LeiaLoft
                     }
                 }
             }
-            
+
             if (EditorGUI.EndChangeCheck())
             {
                 foreach (Object obj in targets)
@@ -266,6 +287,7 @@ namespace LeiaLoft
 #endif
         private static void OnDrawLeiaBounds(LeiaCamera controller, GizmoType gizmoType)
         {
+            //Debug.Log("OnDrawLeiaBounds");
             LeiaCameraBounds.DrawCameraBounds(controller, gizmoType);
         }
     }

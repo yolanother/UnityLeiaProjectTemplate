@@ -15,10 +15,7 @@
 ****************************************************************
 */
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace LeiaLoft
 {
@@ -118,7 +115,14 @@ namespace LeiaLoft
 
         public void SetTrackerEnabled(bool trackerEnabled)
         {
-            this.tracker.enabled = trackerEnabled;
+            if (this.tracker != null)
+            {
+                this.tracker.enabled = trackerEnabled;
+            }
+            else
+            {
+                Debug.LogError("Tracker not found!");
+            }
         }
 
         public void SetBacklightEnabled(bool backlightEnabled)
@@ -147,14 +151,13 @@ namespace LeiaLoft
         public bool BlackViewsOverride = false; //Default is false
         public bool BlackViewsOverrideValue = true;
 
-        private bool _blackViews = false;
         public bool blackViews
         {
             get
             {
                 //If developer wants to override black views value
                 if (BlackViewsOverride)
-                { 
+                {
                     //Return the override value
                     return BlackViewsOverrideValue;
                 }
@@ -164,12 +167,7 @@ namespace LeiaLoft
                 {
                     return false;
                 }
-                else
-                {
-                    return true;
-                }
-
-                return _blackViews;
+                return true;
             }
         }
 
@@ -192,7 +190,7 @@ namespace LeiaLoft
             {
                 //When in LF mode, always do view peeling. When in Stereo, always turn off view peeling.
                 return this.DesiredRenderTechnique == RenderTechnique.Multiview
-                    
+
                 ;
             }
         }
@@ -283,7 +281,7 @@ namespace LeiaLoft
         {
             Stereo = 0,
             Multiview = 1
-                
+
         };
 
         public static string HPO { get { return "HPO"; } }
@@ -712,9 +710,9 @@ namespace LeiaLoft
 
         private void OnResume()
         {
-            #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
             tracker.StartTracking();
-            #endif
+#endif
             if (_leiaDevice != null && _leiaDevice.GetBacklightMode() == 3)
             {
                 // on resume, if the LeiaLights DisplaySDK state machine thinks this app was in 3D mode on last frame
@@ -996,12 +994,15 @@ namespace LeiaLoft
                         switch (Application.platform)
                         {
                             case RuntimePlatform.WindowsPlayer:
+                                Debug.Log("Spawning a Windows Tracker");
                                 _tracker = gameObject.AddComponent<EyeTrackingWindows>();
                                 break;
                             case RuntimePlatform.Android:
+                                Debug.Log("Spawning a Android Tracker");
                                 _tracker = gameObject.AddComponent<EyeTrackingAndroid>();
                                 break;
                             default:
+                                Debug.Log("Spawning a Generic Tracker");
                                 _tracker = gameObject.AddComponent<EyeTracking>();
                                 //Do nothing
                                 break;
@@ -1373,7 +1374,7 @@ namespace LeiaLoft
 
         public float getStretch(int faceIndex, float z)
         {
-            
+
             float D = d_over_n / s;
             float calculated_stretch = (d_over_n) / z;
             float orig_stretch = (d_over_n) / D;
@@ -1483,11 +1484,11 @@ namespace LeiaLoft
             if (this.viewPeeling)
             {
 
-                    result = new Vector3(
-                    getPeelOffset(),
-                    0,
-                    0
-                );
+                result = new Vector3(
+                getPeelOffset(),
+                0,
+                0
+            );
 
                 return result;
             }
