@@ -24,7 +24,7 @@ public class EyeTracking : Singleton<EyeTracking>
     protected int chosenFaceIndexPrev;
 
     [SerializeField] private Text debugLabel;
-    
+
     private float faceX = 0, faceY = 0;
     private float _faceZ = 600;
     public float faceZ
@@ -143,6 +143,16 @@ public class EyeTracking : Singleton<EyeTracking>
 
     public virtual void StartTracking()
     {
+        if (LeiaDisplay.Instance == null)
+        {
+            Debug.LogError("ERROR: LeiaDisplay.Instance == null");
+            return;
+        }
+        if (LeiaDisplay.Instance.displayConfig == null)
+        {
+            Debug.LogError("ERROR: LeiaDisplay.Instance.displayConfig == null");
+            return;
+        }
         faceZ = LeiaDisplay.Instance.displayConfig.ConvergenceDistance;
     }
 
@@ -277,7 +287,7 @@ public class EyeTracking : Singleton<EyeTracking>
                 chosenFaceIndex = -1;
 
                 Face ActiveFace = trackingResult.Faces[0];
-                
+
                 Vector3 currentPos = new Vector3(
                         faceX,
                         faceY,
@@ -379,7 +389,7 @@ public class EyeTracking : Singleton<EyeTracking>
     protected virtual void TerminateHeadTracking()
     {
         IsTracking = false;
-        
+
     }
 
 }

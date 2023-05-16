@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: 60
+  ShowInEditMode: 0
   ShowAtRuntime: 0
   corners:
   - {fileID: 7116535137227990035}
@@ -119,6 +120,7 @@ MonoBehaviour:
   - {fileID: 7298569720197142654}
   - {fileID: 7298569719624706618}
   logo: {fileID: 7298569720736759821}
+  DefaultControlMode: 0
 --- !u!1 &7298569719948673725
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +230,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraZaxisMovement: 0
-  eyeTrackingAnimatedBaselineScalar: 0
   mViewportRectFillTechnique: 0
   _disparityScaling: 1
   _cameraShiftScaling: 1
@@ -415,12 +416,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d52391895797424b95393415ab20689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interlaceInEditor: 1
   ActMode: 0
   SimulatedFaceX: 0
   SimulatedFaceY: 0
   SimulatedFaceZ: 600
   SWBrightness: 1
   eyeTrackingStatusBarEnabled: 1
+  _usingSimulatedFacePosition: 0
+  maxDpiForBlackViews: 480
   minView: 0
   maxView: 0
   range: 0
@@ -431,25 +435,14 @@ MonoBehaviour:
   PerPixelCorrectionEnabled: 1
   AutoRenderTechnique: 1
   blackViewsTemp: 1
+  BlackViewsOverride: 0
+  BlackViewsOverrideValue: 1
   _isDirty: 0
   m_DesiredLightfieldMode: 1
   m_ActualLightfieldMode: 1
   _isRainbow: 0
-  faceX: 0
-  faceY: 0
-  faceZ: 0
   viewerPositionNonPredicted: {x: 0, y: 0, z: 535.964}
-  viewerPosition: {x: 0, y: 0, z: 535.964}
-  stretchTS:
-    scale: 1
-    offset: 0
-    mode: 0
-  correctViewIndexForViewerPosition: 1
-  ctrlToggleCorrection: 117
-  viewXYOffsetTS:
-    scale: 0.12
-    offset: 0
-    mode: 0
+  viewerPositionPredicted: {x: 0, y: 0, z: 535.964}
   round: 0
   roundViewPeel: 1
   numViews: 0

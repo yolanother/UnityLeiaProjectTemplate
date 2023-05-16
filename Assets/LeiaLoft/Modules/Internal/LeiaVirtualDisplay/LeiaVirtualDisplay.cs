@@ -9,13 +9,21 @@ using UnityEditor;
 public class LeiaVirtualDisplay : MonoBehaviour
 {
     [SerializeField] private float height = 5f;
+    private float heightPrevious;
+    [SerializeField] private bool ShowInEditMode = false;
     [SerializeField] private bool ShowAtRuntime = false;
+
+    bool showInEditModePrev;
+    bool showAtRuntimePrev;
+
+    float screenWidth = 1000;
+    float screenHeight = 1000;
 
     public float width
     {
         get
         {
-            return this.height * Screen.width / Screen.height;
+            return this.height * screenWidth / screenHeight;
         }
     }
 
@@ -25,7 +33,7 @@ public class LeiaVirtualDisplay : MonoBehaviour
     {
         this.height = height;
     }
-    
+
     public float Width
     {
         get
@@ -48,8 +56,8 @@ public class LeiaVirtualDisplay : MonoBehaviour
 
     [HideInInspector]
     public Transform[] corners;
-    [HideInInspector,SerializeField] private Transform[] sides;
-    [HideInInspector,SerializeField] private Transform logo;
+    [HideInInspector, SerializeField] private Transform[] sides;
+    [HideInInspector, SerializeField] private Transform logo;
 
     Transform _model;
     Transform model
@@ -80,6 +88,8 @@ public class LeiaVirtualDisplay : MonoBehaviour
             return _model;
         }
     }
+
+    public ControlMode DefaultControlMode = ControlMode.DrivenByLeiaCamera;
 
     public enum ControlMode { DrivesLeiaCamera, DrivenByLeiaCamera };
 
@@ -123,18 +133,54 @@ public class LeiaVirtualDisplay : MonoBehaviour
             return _leiaCamera;
         }
     }
-    #if UNITY_ANDROID
-    private float timerForBacklightSwitch = 0;
-    private float targetTimeForBacklightSwitch = 3.0f;
-    #endif
 
     void Start()
     {
         UpdateDisplayGizmos();
     }
 
-    void UpdateDisplayGizmos()
+
+    public void UpdateCameraFromVirtualDisplay()
     {
+        if (Application.isPlaying)
+        {
+            Debug.Log("UpdateCameraFromVirtualDisplay");
+        }
+        //given LeiaCamera FOV angle and height of the virtual display, calculate what distance should be
+        //l = h/tan(θ)
+        float length = (height / 2f) / Mathf.Tan((leiaCamera.Camera.fieldOfView / 2f) * Mathf.Deg2Rad);
+
+        if (!Application.isPlaying)
+        {
+            //If app not playing then reset the camera to default position
+
+            leiaCamera.transform.localPosition = new Vector3(0, 0, -1) * length;
+            leiaCamera.ConvergenceDistance = length;
+        }
+    }
+
+    public void UpdateVirtualDisplayFromCamera()
+    {
+        //if (Application.isPlaying)
+        //{
+            //Debug.Log("UpdateVirtualDisplayFromCamera"); //we know it gets here
+        //}
+        height = Mathf.Tan((leiaCamera.Camera.fieldOfView / 2f) / Mathf.Rad2Deg) * (2f * leiaCamera.ConvergenceDistance);
+        transform.localPosition = new Vector3(0, 0, leiaCamera.ConvergenceDistance);
+        transform.localRotation = Quaternion.identity;
+    }
+
+    public void UpdateDisplayGizmos()
+    {
+        //Debug.Log("UpdateDisplayGizmos");
+#if UNITY_EDITOR
+        screenHeight = (leiaCamera.ConvergenceDistance * Mathf.Tan(leiaCamera.Camera.fieldOfView * Mathf.PI / 360.0f) * 2f);
+        screenWidth = (GameViewUtils.GetGameViewAspectRatio() * (screenHeight));
+#else
+       screenWidth = Screen.width;
+       screenHeight = Screen.height;
+#endif
+
         if (model != null)
         {
             if (logo == null)
@@ -188,28 +234,37 @@ public class LeiaVirtualDisplay : MonoBehaviour
 
         if (this.controlMode == ControlMode.DrivenByLeiaCamera)
         {
-            height = Mathf.Tan((leiaCamera.Camera.fieldOfView / 2f) / Mathf.Rad2Deg) * (2f * leiaCamera.ConvergenceDistance);
-            transform.localPosition = new Vector3(0, 0, leiaCamera.ConvergenceDistance);
+            this.UpdateVirtualDisplayFromCamera();
         }
 
         if (this.controlMode == ControlMode.DrivesLeiaCamera)
         {
             if (transform.localScale.x != 1)
             {
+#if UNITY_EDITOR
+                Undo.RecordObject(this, "Set Virtual Display Scale");
+#endif
                 this.height *= transform.localScale.x;
                 transform.localScale = Vector3.one;
             }
             if (transform.localScale.y != 1)
             {
+#if UNITY_EDITOR
+                Undo.RecordObject(this, "Set Virtual Display Scale");
+#endif
                 this.height *= transform.localScale.y;
                 transform.localScale = Vector3.one;
             }
             if (transform.localScale.z != 1)
             {
+#if UNITY_EDITOR
+                Undo.RecordObject(this, "Set Virtual Display Scale");
+#endif
                 this.height *= transform.localScale.z;
                 transform.localScale = Vector3.one;
             }
         }
+
         float thickness = this.height * .05f;
 
         if (Application.isPlaying)
@@ -219,10 +274,6 @@ public class LeiaVirtualDisplay : MonoBehaviour
 
             if (this.controlMode == ControlMode.DrivesLeiaCamera)
             {
-                if (Application.isEditor)
-                {
-                    return;
-                }
                 //Set camera Z position based on eye tracking
                 float d = LeiaDisplay.Instance.tracker.faceZ * (height) / displayHeightMM;
                 convergenceSmoothed += (d - convergenceSmoothed) * Mathf.Min((Time.deltaTime * 15f), 1f);
@@ -242,38 +293,27 @@ public class LeiaVirtualDisplay : MonoBehaviour
 
         if (this.controlMode == ControlMode.DrivesLeiaCamera)
         {
-            //Set the camera's field of view
-            leiaCamera.Camera.fieldOfView = 2f * Mathf.Atan(
-                (height) /
-                (2f * leiaCamera.ConvergenceDistance)
-                ) * Mathf.Rad2Deg;
-
-            if (!Application.isPlaying)
-            {
-                //If app not playing then reset the camera to default position
-                leiaCamera.transform.localPosition = new Vector3(0, 0, -1) * this.height;
-                leiaCamera.ConvergenceDistance = this.height;
-            }
+            this.UpdateCameraFromVirtualDisplay();
         }
 
         //Update the virtual display model
         if (model != null)
         {
+            heightPrevious = height;
+
             sides[0].localPosition = new Vector3(0, height / 2f + .5f * thickness, 0);
+
             sides[1].localPosition = new Vector3(0, -height / 2f - .5f * thickness, 0);
             sides[2].localPosition = new Vector3(width / 2f + .5f * thickness, 0, 0);
             sides[3].localPosition = new Vector3(-width / 2f - .5f * thickness, 0, 0);
-
             sides[0].localScale = new Vector3(width, thickness, thickness);
             sides[1].localScale = new Vector3(width, thickness, thickness);
             sides[2].localScale = new Vector3(thickness, height, thickness);
             sides[3].localScale = new Vector3(thickness, height, thickness);
-
             corners[0].localPosition = new Vector3(width / 2f + .5f * thickness, height / 2f + .5f * thickness, 0);
             corners[1].localPosition = new Vector3(-width / 2f - .5f * thickness, height / 2f + .5f * thickness, 0);
             corners[2].localPosition = new Vector3(width / 2f + .5f * thickness, -height / 2f - .5f * thickness, 0);
             corners[3].localPosition = new Vector3(-width / 2f - .5f * thickness, -height / 2f - .5f * thickness, 0);
-
             corners[0].localScale = new Vector3(thickness, thickness, thickness);
             corners[1].localScale = new Vector3(thickness, thickness, thickness);
             corners[2].localScale = new Vector3(thickness, thickness, thickness);
@@ -287,9 +327,21 @@ public class LeiaVirtualDisplay : MonoBehaviour
             logo.localPosition = new Vector3(0, -height / 2f - .5f * thickness, -thickness / 2f);
             logo.localScale = new Vector3(1f, 1f, 1f) * thickness / 2f;
 
+            bool virtualDisplayIsVisible = false;
+#if UNITY_EDITOR
+            if (!Application.isPlaying && (ShowInEditMode || (gameObject == Selection.activeGameObject)))
+            {
+                virtualDisplayIsVisible = true;
+            }
+            if (Application.isPlaying && ShowAtRuntime)
+            {
+                virtualDisplayIsVisible = true;
+            }
+#endif
+
             for (int i = 0; i < sides.Length; i++)
             {
-                sides[i].GetComponent<MeshRenderer>().enabled = !Application.isPlaying || ShowAtRuntime;
+                sides[i].GetComponent<MeshRenderer>().enabled = virtualDisplayIsVisible;
 
 #if UNITY_EDITOR
                 if (Selection.Contains(sides[i].gameObject))
@@ -300,7 +352,7 @@ public class LeiaVirtualDisplay : MonoBehaviour
             }
             for (int i = 0; i < corners.Length; i++)
             {
-                corners[i].GetComponent<MeshRenderer>().enabled = !Application.isPlaying || ShowAtRuntime;
+                corners[i].GetComponent<MeshRenderer>().enabled = virtualDisplayIsVisible;
 
 #if UNITY_EDITOR
                 if (Selection.Contains(corners[i].gameObject))
@@ -310,14 +362,12 @@ public class LeiaVirtualDisplay : MonoBehaviour
 #endif
             }
 
-            if (Application.isPlaying)
+            MeshRenderer[] logoMeshRenderers = logo.GetComponentsInChildren<MeshRenderer>();
+            for (int i = 0; i < logoMeshRenderers.Length; i++)
             {
-                MeshRenderer[] logoMeshRenderers = logo.GetComponentsInChildren<MeshRenderer>();
-                for (int i = 0; i < logoMeshRenderers.Length; i++)
-                {
-                    logoMeshRenderers[i].enabled = ShowAtRuntime;
-                }
+                logoMeshRenderers[i].enabled = virtualDisplayIsVisible;
             }
+
 #if UNITY_EDITOR
             if (Selection.Contains(logo.gameObject))
             {
@@ -326,9 +376,115 @@ public class LeiaVirtualDisplay : MonoBehaviour
 #endif
         }
     }
-
     void LateUpdate()
     {
         UpdateDisplayGizmos();
+    }
+
+
+    GameObject previousSelectedObject;
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (!SceneView.currentDrawingSceneView)
+        {
+            UpdateDisplayGizmos();
+        }
+    }
+
+    void Update()
+    {
+        if (!Application.isPlaying)
+        {
+            if (Selection.activeGameObject != previousSelectedObject)
+            {
+                if (Selection.activeGameObject == gameObject)
+                {
+                    //This GameObject is selected in the Editor
+                    SetVirtualDisplayAsParent();
+                }
+                else if (Selection.activeGameObject == this.leiaCamera.gameObject)
+                {
+                    SetLeiaCameraAsParent();
+                }
+                else
+                {
+                    if (previousSelectedObject == gameObject)
+                    {
+                        //By default, set the LeiaCamera as the parent
+                        if (DefaultControlMode == ControlMode.DrivenByLeiaCamera)
+                        {
+                            SetLeiaCameraAsParent();
+                        }
+                        else
+                        {
+                            SetVirtualDisplayAsParent();
+                        }
+                    }
+                }
+                previousSelectedObject = Selection.activeGameObject;
+            }
+        }
+    }
+#endif
+
+    public void SetLeiaCameraAsParent()
+    {
+        if (!Application.isPlaying)
+        {
+            if (transform.parent != leiaCamera.transform)
+            {
+                if (!IsPartOfPrefab)
+                {
+                    //This GameObject is selected in the Editor
+                    this.controlMode = ControlMode.DrivenByLeiaCamera;
+                    Transform newParent = transform.parent;
+                    leiaCamera.transform.parent = null;
+                    transform.parent = leiaCamera.transform;
+                    leiaCamera.transform.parent = newParent;
+                }
+            }
+        }
+    }
+
+    public void SetVirtualDisplayAsParent()
+    {
+        if (!Application.isPlaying)
+        {
+            if (!IsPartOfPrefab)
+            {
+                this.controlMode = ControlMode.DrivesLeiaCamera;
+                Transform newParent = leiaCamera.transform.parent;
+                transform.parent = null;
+                leiaCamera.transform.parent = transform;
+                transform.parent = newParent;
+            }
+            else
+            {
+                Debug.Log("Is part of prefab, so not doing it");
+            }
+        }
+    }
+
+    public bool IsPartOfPrefab
+    {
+        get
+        {
+#if UNITY_EDITOR
+            bool parentIsAPrefab = false;
+
+            if (transform.parent != null && PrefabUtility.GetPrefabAssetType(transform.parent.gameObject) != PrefabAssetType.NotAPrefab)
+            {
+                parentIsAPrefab = true;
+            }
+
+            bool thisIsAPrefab = PrefabUtility.GetPrefabAssetType(gameObject) != PrefabAssetType.NotAPrefab;
+
+            return (thisIsAPrefab || parentIsAPrefab);
+#else
+            return false;
+#endif
+        }
     }
 }

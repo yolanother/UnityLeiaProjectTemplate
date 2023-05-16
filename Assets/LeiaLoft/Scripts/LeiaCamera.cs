@@ -97,11 +97,18 @@ namespace LeiaLoft
             {
                 _virtualDisplay = transform.parent.GetComponent<LeiaVirtualDisplay>();
             }
+            
+            if (_virtualDisplay == null)
+            {
+                _virtualDisplay = transform.GetComponentInChildren<LeiaVirtualDisplay>();
+            }
+
             if (_virtualDisplay == null)
             {
                 GameObject virtualDisplayGameObject = new GameObject("LeiaVirtualDisplay");
                 virtualDisplayGameObject.transform.parent = transform;
                 _virtualDisplay = virtualDisplayGameObject.AddComponent<LeiaVirtualDisplay>();
+                _virtualDisplay.controlMode = LeiaVirtualDisplay.ControlMode.DrivenByLeiaCamera;
             }
         }
 

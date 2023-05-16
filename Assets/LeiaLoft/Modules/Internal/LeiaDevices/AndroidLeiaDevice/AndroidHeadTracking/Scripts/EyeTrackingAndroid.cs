@@ -10,11 +10,6 @@ public class EyeTrackingAndroid : EyeTracking
 
     public FaceDetectorBackend FaceTrackingBackend { get => faceTrackingBackend; set => faceTrackingBackend = value; }
 
-#if UNITY_ANDROID
-    private bool isTrackingStartedAndroid = false;
-    int currAvgFaceIdx = 0;
-#endif
-
     protected override void UpdateCameraConnectedStatus()
     {
         _cameraConnectedPrev = _cameraConnected;
