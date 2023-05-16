@@ -93,7 +93,7 @@ public class LeiaVirtualDisplay : MonoBehaviour
 
     public enum ControlMode { DrivesLeiaCamera, DrivenByLeiaCamera };
 
-    private ControlMode _controlMode = ControlMode.DrivesLeiaCamera;
+    private ControlMode _controlMode = ControlMode.DrivenByLeiaCamera;
 
     public ControlMode controlMode
     {
@@ -115,17 +115,12 @@ public class LeiaVirtualDisplay : MonoBehaviour
             if (_leiaCamera == null)
             {
                 _leiaCamera = GetComponentInChildren<LeiaCamera>();
-                if (_leiaCamera != null)
-                {
-                    _controlMode = ControlMode.DrivesLeiaCamera;
-                }
-                else
+                if (_leiaCamera == null)
                 {
                     _leiaCamera = transform.parent.GetComponent<LeiaCamera>();
-                    _controlMode = ControlMode.DrivenByLeiaCamera;
                     if (_leiaCamera == null)
                     {
-                        _leiaCamera = FindObjectOfType<LeiaCamera>();
+                        Debug.LogError("No LeiaCamera found for virtual display on gameobject "+gameObject.name);
                     }
                 }
             }
