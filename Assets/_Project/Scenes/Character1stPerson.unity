@@ -4868,8 +4868,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3532264183315504959, guid: 37fceac935601c94186b04a43c4d2bfe,
         type: 3}
+      propertyPath: _disparityScaling
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532264183315504959, guid: 37fceac935601c94186b04a43c4d2bfe,
+        type: 3}
       propertyPath: _cameraShiftScaling
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532264183315504959, guid: 37fceac935601c94186b04a43c4d2bfe,
+        type: 3}
+      propertyPath: _convergenceDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4442495942014124993, guid: 37fceac935601c94186b04a43c4d2bfe,
         type: 3}
@@ -19397,16 +19407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 35405cfd91ce747daa817a559c954f32, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
-  m_PreviousLayer: 10
-  m_PreviousPriority: 0
-  m_TempColliders:
-  - {fileID: 2120429406}
-  m_InternalProfile: {fileID: 0}
 --- !u!65 &2120429406
 BoxCollider:
   m_ObjectHideFlags: 0
