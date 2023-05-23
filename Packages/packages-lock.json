@@ -1,11 +1,22 @@
 {
   "dependencies": {
-    "com.doubtech.unitybuilds": {
-      "version": "https://github.com/yolanother/UnityBuildUtils.git",
+    "com.doubtech.assetmanager": {
+      "version": "file:AssetManager",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "b0d807b06c079a78e114333a62a541ffc9e47daf"
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.doubtech.leia.camerapresets": {
+      "version": "file:LeiaCameraPresets",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.doubtech.unitybuilds": {
+      "version": "file:UnityBuildUtils",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

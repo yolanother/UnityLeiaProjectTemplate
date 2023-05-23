@@ -6,24 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Project/Scenes/LoadingScene.unity
+    path: Packages/com.doubtech.leia.camerapresets/Scenes/LoadingScene.unity
     guid: 96fae75c9ccb4fc4ca67b4209df67488
   - enabled: 1
-    path: Assets/_Project/Scenes/Main.unity
+    path: Packages/com.doubtech.leia.camerapresets/Scenes/Main.unity
     guid: d37801bba83b59a41be603cd68a64aca
   - enabled: 1
-    path: Assets/_Project/Scenes/TopdownHexGrid.unity
+    path: Packages/com.doubtech.leia.camerapresets/Scenes/TopdownHexGrid.unity
     guid: 614a90b56ce3a0643a70f7998b66909f
   - enabled: 1
-    path: Assets/_Project/Scenes/Cockpit.unity
+    path: Packages/com.doubtech.leia.camerapresets/Scenes/Cockpit.unity
     guid: 882ba0116a634fc42bc84ca7832dca16
   - enabled: 1
-    path: Assets/_Project/Scenes/Ship3rdPerson.unity
+    path: Packages/com.doubtech.leia.camerapresets/Scenes/Ship3rdPerson.unity
     guid: 13afaa842668aa0468fbbfc2386d2c20
   - enabled: 1
-    path: Assets/_Project/Scenes/Character3rdPerson.unity
+    path: Packages/com.doubtech.leia.camerapresets/Scenes/Character3rdPerson.unity
     guid: 34a8ade0c5c9afa4297f8fbcf8b4b213
   - enabled: 1
-    path: Assets/_Project/Scenes/Character1stPerson.unity
+    path: Packages/com.doubtech.leia.camerapresets/Scenes/Character1stPerson.unity
     guid: 1f4d2a126e19c6b44a0e76178321cee6
   m_configObjects: {}

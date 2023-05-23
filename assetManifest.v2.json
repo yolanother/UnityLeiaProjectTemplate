@@ -42,6 +42,13 @@
             "versionId": "1.0",
             "versionNumber": 660221,
             "url": "https://assetstore.unity.com/packages/slug/208640"
+        },
+        {
+            "name": "Odin Validator",
+            "id": "227861",
+            "versionId": "3.1.12.2",
+            "versionNumber": 801812,
+            "url": "https://assetstore.unity.com/packages/slug/227861"
         }
     ]
 }
